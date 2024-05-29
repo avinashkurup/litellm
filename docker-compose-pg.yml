@@ -1,0 +1,32 @@
+version: '3.8'
+services:
+  db:
+    image: postgres:16
+    container_name: litellm_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: citrus
+      POSTGRES_DB: litellm
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
+    ports:
+      - "5436:5432"
+    networks:
+      - "network"
+  litellm:
+    container_name: litellm-proxy
+    image: ghcr.io/berriai/litellm:main-v1.35.38
+    restart: unless-stopped
+    ports:
+      - "4000:4000"
+    depends_on:
+      - db
+    env_file:
+      - .env
+    networks:
+      - "network"
+    command: [ "--config", "/app/config.yaml", "--port", "4000", "--num_workers", "8", "--detailed_debug" ]
+networks:
+  network:
+   external:
+    name: appliance

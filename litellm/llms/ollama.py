@@ -2,10 +2,11 @@ from itertools import chain
 import requests, types, time  # type: ignore
 import json, uuid
 import traceback
-from typing import Optional
+from typing import Optional, List
 import litellm
 import httpx, aiohttp, asyncio  # type: ignore
 from .prompt_templates.factory import prompt_factory, custom_prompt
+from litellm.types.utils import ProviderField
 
 
 class OllamaError(Exception):
@@ -120,6 +121,17 @@ class OllamaConfig:
             )
             and v is not None
         }
+
+    def get_required_params(self) -> List[ProviderField]:
+        """For a given provider, return it's required fields with a description"""
+        return [
+            ProviderField(
+                field_name="api_base",
+                field_type="string",
+                field_description="Your Ollama API Base.",
+                field_value="http://localhost:11434",
+            ),
+        ]
 
 # ollama wants plain base64 jpeg/png files as images.  strip any leading dataURI
 # and convert to jpeg if necessary.
