@@ -1,0 +1,5 @@
+steps to build the nextjs project in devcontainer.
+
+cd /workspaces/litellm
+sudo ./build_admin_ui.sh
+poetry run litellm --config ../litellm/litellm_config.yaml
