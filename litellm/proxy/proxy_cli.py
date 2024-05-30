@@ -59,7 +59,8 @@ def is_port_in_use(port):
 @click.option(
     "--host", default="0.0.0.0", help="Host for the server to listen on.", envvar="HOST"
 )
-@click.option("--port", default=4000, help="Port to bind the server to.", envvar="PORT")
+# @click.option("--port", default=4000, help="Port to bind the server to.", envvar="PORT")
+@click.option("--port", default=4001, help="Port to bind the server to.", envvar="PORT")
 @click.option(
     "--num_workers",
     default=1,

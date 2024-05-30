@@ -1,10 +1,10 @@
 model_list:
-  - model_name: azure-gpt-3.5
-    litellm_params:
-      model: azure/<your-azure-model-deployment>
-      api_base: os.environ/AZURE_API_BASE # runs os.getenv("AZURE_API_BASE")
-      api_key: os.environ/AZURE_API_KEY # runs os.getenv("AZURE_API_KEY")
-      api_version: "2023-07-01-preview"
+  # - model_name: azure-gpt-3.5
+  #   litellm_params:
+  #     model: azure/<your-azure-model-deployment>
+  #     api_base: os.environ/AZURE_API_BASE # runs os.getenv("AZURE_API_BASE")
+  #     api_key: os.environ/AZURE_API_KEY # runs os.getenv("AZURE_API_KEY")
+  #     api_version: "2023-07-01-preview"
   - model_name: ollama-llama3
     litellm_params:
       model: ollama/llama3

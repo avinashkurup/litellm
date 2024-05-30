@@ -132,6 +132,7 @@ enum Providers {
   OpenAI_Compatible = "OpenAI-Compatible Endpoints (Groq, Together AI, Mistral AI, etc.)",
   Vertex_AI = "Vertex AI (Anthropic, Gemini, etc.)",
   Databricks = "Databricks",
+  Ollama = "Ollama"
 }
 
 const provider_map: Record<string, string> = {
@@ -143,6 +144,7 @@ const provider_map: Record<string, string> = {
   OpenAI_Compatible: "openai",
   Vertex_AI: "vertex_ai",
   Databricks: "databricks",
+  Ollama: "ollama"
 };
 
 const retry_policy_map: Record<string, string> = {
@@ -1256,11 +1258,11 @@ const ModelDashboard: React.FC<ModelDashboardProps> = ({
                                 ? model.input_cost
                                 : model.litellm_params.input_cost_per_token
                                   ? (
-                                      Number(
-                                        model.litellm_params
-                                          .input_cost_per_token
-                                      ) * 1000000
-                                    ).toFixed(2)
+                                    Number(
+                                      model.litellm_params
+                                        .input_cost_per_token
+                                    ) * 1000000
+                                  ).toFixed(2)
                                   : null}
                             </pre>
                           </TableCell>
@@ -1276,11 +1278,11 @@ const ModelDashboard: React.FC<ModelDashboardProps> = ({
                                 ? model.output_cost
                                 : model.litellm_params.output_cost_per_token
                                   ? (
-                                      Number(
-                                        model.litellm_params
-                                          .output_cost_per_token
-                                      ) * 1000000
-                                    ).toFixed(2)
+                                    Number(
+                                      model.litellm_params
+                                        .output_cost_per_token
+                                    ) * 1000000
+                                  ).toFixed(2)
                                   : null}
                             </pre>
                           </TableCell>
@@ -1288,8 +1290,8 @@ const ModelDashboard: React.FC<ModelDashboardProps> = ({
                             <p style={{ fontSize: "10px" }}>
                               {premiumUser
                                 ? formatCreatedAt(
-                                    model.model_info.created_at
-                                  ) || "-"
+                                  model.model_info.created_at
+                                ) || "-"
                                 : "-"}
                             </p>
                           </TableCell>
@@ -1539,6 +1541,15 @@ const ModelDashboard: React.FC<ModelDashboardProps> = ({
                   )}
                   {(selectedProvider == Providers.Azure ||
                     selectedProvider == Providers.OpenAI_Compatible) && (
+                      <Form.Item
+                        rules={[{ required: true, message: "Required" }]}
+                        label="API Base"
+                        name="api_base"
+                      >
+                        <TextInput placeholder="https://..." />
+                      </Form.Item>
+                    )}
+                  {(selectedProvider == Providers.Ollama) && (
                     <Form.Item
                       rules={[{ required: true, message: "Required" }]}
                       label="API Base"
@@ -1836,7 +1847,7 @@ const ModelDashboard: React.FC<ModelDashboardProps> = ({
                     ([exceptionType, retryPolicyKey], idx) => {
                       let retryCount =
                         modelGroupRetryPolicy?.[selectedModelGroup!]?.[
-                          retryPolicyKey
+                        retryPolicyKey
                         ];
                       if (retryCount == null) {
                         retryCount = defaultRetry;
@@ -1861,7 +1872,7 @@ const ModelDashboard: React.FC<ModelDashboardProps> = ({
                                   (prevModelGroupRetryPolicy) => {
                                     const prevRetryPolicy =
                                       prevModelGroupRetryPolicy?.[
-                                        selectedModelGroup!
+                                      selectedModelGroup!
                                       ] ?? {};
                                     return {
                                       ...(prevModelGroupRetryPolicy ?? {}),

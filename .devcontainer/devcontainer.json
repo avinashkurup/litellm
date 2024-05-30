@@ -35,8 +35,7 @@
 	"portsAttributes": {
 		"4001": {
 			"label": "LiteLLM Server",
-			// "onAutoForward": "notify"
-			"onAutoForward": "openBrowser"
+			"onAutoForward": "notify"
 		}
 	},
 	// More info: https://aka.ms/dev-containers-non-root.
